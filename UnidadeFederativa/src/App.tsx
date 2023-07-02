@@ -4,23 +4,24 @@ import "./App.css";
 const AppNavBar = () => {
 	return (
 		<div className="card">
-			<h1>Lista das siglas das Unidades Federativas</h1>
+			<h1>Lista de siglas das Unidades Federativas</h1>
 		</div>
 	);
 };
 
 const AppUFLista = (props: any) => {
   return (
-    <ul>
-      <li>{props.sigla}</li>
+    <ul> {props.ufs.map( (item:any, indice) => (
+      <li key={indice} onClick={() => (setUF(item))} > {item.sigla} </li> ))} 
     </ul>
-  );
+    );
 };
 
 const AppUFDetalhe = (props: any) => {
   return (
     <div className="card">
-        <button onClick={props.funcao}>Pegar siglas</button>
+        <h2> Sigla: {props.sigla} </h2>
+        <p> Nome: {props.nome} </p>
       </div>
     )
   }
@@ -40,15 +41,14 @@ const AppUFDetalhe = (props: any) => {
         "nome" : "São Paulo"
       }
     ]);
-    
-    const funcao = () =>{
-      ufs.map( (uf, indice) => (<AppUFLista key={indice} sigla={uf.sigla}> </AppUFLista> ))
-    }
-    
-    return (
+      const [uf, setUF] = useState ({})
+
+   return (
       <>
 			<AppNavBar />
-      <AppUFDetalhe funcao={funcao}/>
+      <AppUFDetalhe sigla={uf.sigla} nome={uf.nome}/>
+      <AppUFLista ufs={ufs}/>
+
 		</>
 	);
 };
